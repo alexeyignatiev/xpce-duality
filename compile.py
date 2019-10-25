@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
+##
+## compile.py
+##
+##  Created on: Apr 18, 2019
+##      Author: Alexey Ignatiev
+##      E-mail: alexey.ignatiev@monash.edu
+##
 
-
+#
+#==============================================================================
 from __future__ import print_function
 import cplex
 import getopt
@@ -17,6 +25,8 @@ from six.moves import range
 import sys
 
 
+#
+#==============================================================================
 def parse_lpfile(fname):
     """
         Parse LP file and extract LP constraints as well as variable names and
@@ -44,6 +54,8 @@ def parse_lpfile(fname):
     return ilp, inputs, outputs, data
 
 
+#
+#==============================================================================
 def prepare_hitman(pixels, inputs, intervals, htype):
     """
         Initialize a hitting set enumerator.
@@ -73,6 +85,8 @@ def prepare_hitman(pixels, inputs, intervals, htype):
     return h
 
 
+#
+#==============================================================================
 def compile_classifier(h, x, inputs, pmap, intervals, verb):
     """
         Compile the classifier using ILP.
@@ -119,6 +133,8 @@ def compile_classifier(h, x, inputs, pmap, intervals, verb):
     return expls, coexs
 
 
+#
+#==============================================================================
 def hit_counterexample(coex, expl, h, inputs, intervals):
     """
         Encode the negation of the counterexample so that it will be hit next
@@ -155,6 +171,8 @@ def hit_counterexample(coex, expl, h, inputs, intervals):
     h.oracle.add_clause(encoded)
 
 
+#
+#==============================================================================
 class ILPExplainer(object):
     """
         An ILP-inspired minimal explanation extractor for neural networks
@@ -546,6 +564,9 @@ class ILPExplainer(object):
             mpimg.imsave('sample{0}-true-ae.png'.format(dataid), pixels1,
                     cmap=mpcm.gray, dpi=5)
 
+
+#
+#==============================================================================
 def parse_options():
     """
         Parses command-line options:
@@ -603,6 +624,8 @@ def parse_options():
     return compile_, datainst, expl, free, intervals, htype, save, verb, args
 
 
+#
+#==============================================================================
 def usage():
     """
         Prints usage message.
@@ -610,23 +633,25 @@ def usage():
 
     print('Usage:', os.path.basename(sys.argv[0]), '[options] lp-file')
     print('Options:')
-    print('        -c, --compile=<int>        Class to compile')
-    print('                                   Available values: [0 .. INT_MAX], true, opposite (default: 0)')
-    print('        -d, --data=<int>           Index of data instance to work with')
-    print('                                   Available values: [0 .. INT_MAX] (default: 0)')
-    print('        -e, --expl=<int>           Show explanation with this numerical identifier')
-    print('                                   Available values: [0 .. INT_MAX], none (default: none)')
-    print('        -i, --intervals=<int>      Number of intervals, i.e. values, per pixel')
-    print('                                   Available values: [2 .. INT_MAX] (default: 8)')
+    print('        -c, --compile=<int>      Class to compile')
+    print('                                 Available values: [0 .. INT_MAX], true, opposite (default: 0)')
+    print('        -d, --data=<int>         Index of data instance to work with')
+    print('                                 Available values: [0 .. INT_MAX] (default: 0)')
+    print('        -e, --expl=<int>         Show explanation with this numerical identifier')
+    print('                                 Available values: [0 .. INT_MAX], none (default: none)')
+    print('        -i, --intervals=<int>    Number of intervals, i.e. values, per pixel')
+    print('                                 Available values: [2 .. INT_MAX] (default: 8)')
     print('        -h, --help')
-    print('        --htype=<string>           Approach to enumerate hitting sets')
-    print('                                   Available values: lbx, maxsat/rc2/sorted, mcsls (default: lbx)')
-    print('        -p, --patch=<string>       A path to a file containing a comma-separated list of free pixels identifiers')
-    print('                                   Default: none (means that all pixels are free)')
-    print('        --save                     Save the resulting image')
-    print('        -v, --verb                 Be verbose')
+    print('        --htype=<string>         Approach to enumerate hitting sets')
+    print('                                 Available values: lbx, maxsat/rc2/sorted, mcsls (default: lbx)')
+    print('        -p, --patch=<string>     A path to a file containing a comma-separated list of free pixels identifiers')
+    print('                                 Default: none (means that all pixels are free)')
+    print('        --save                   Save the resulting image')
+    print('        -v, --verb               Be verbose')
 
 
+#
+#==============================================================================
 if __name__ == '__main__':
     # parse command-line options
     compile_, dataid, eid, free, intervals, htype, save, verb, files = parse_options()

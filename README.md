@@ -58,7 +58,7 @@ Similarly to the case of digit five, the following commands can be used to obtai
 $ compile.py -p sample41.patch --htype rc2 -d 41 -e 5 -c true -i 2 --save mnist56.lp
 ```
 
-and 
+and
 
 ```
 $ compile.py -p sample41.patch --htype rc2 -d 41 -c opposite -i 2 --save mnist56.lp
@@ -69,6 +69,21 @@ Option `-e 5` in the former command assumes that explanation with index 5 is the
 ### Other data instances
 
 Although this repository gives access to the patch files for the concrete data instances used in the paper (31 and 41), a user may want to play with other data samples. For that, other patch files may be needed. Note that if the script finishes without computing any explanation and any counterexample then this essentially means that the patch area is too small, i.e. the prediction holds no matter what colors of the patch pixels are. In this case, the patch should be be extended to include more pixels.
+
+## Citation
+
+If this work has been significant to a project that leads to an academic publication, please, acknowledge that fact by citing our paper:
+
+```
+@inproceedings{inms-neurips19,
+  author    = {Alexey Ignatiev and
+               Nina Narodytska and
+               Joao Marques-Silva},
+  title     = {On Relating Explanations and Adversarial Examples},
+  booktitle = {NeurIPS},
+  year      = {2019}
+}
+```
 
 ## License
 
